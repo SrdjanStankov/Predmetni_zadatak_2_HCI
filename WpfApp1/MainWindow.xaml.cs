@@ -275,7 +275,7 @@ namespace WpfApp1
 
 			foreach (string item in temp)
 			{
-				if (item != "")
+				if (item != "" && item != "\r")
 				{
 					count++;
 				}
