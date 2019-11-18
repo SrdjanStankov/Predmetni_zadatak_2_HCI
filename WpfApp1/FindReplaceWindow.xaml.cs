@@ -14,14 +14,14 @@ namespace WpfApp1
 
 		private void button_Click(object sender, RoutedEventArgs e)
 		{
-			if (textBox.Text == "")
+			if (string.IsNullOrEmpty(findTb.Text) || string.IsNullOrWhiteSpace(findTb.Text))
 			{
 				MessageBox.Show("Nothing to find!", "Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
 			}
 			else
 			{
-				MainWindow.find = textBox.Text;
-				MainWindow.replaceWith = textBox_Copy.Text;
+				MainWindow.find = findTb.Text;
+				MainWindow.replaceWith = replaceTb.Text;
 				DialogResult = true;
 				Close();
 			}

@@ -14,27 +14,27 @@ namespace WpfApp1
 		public ColorPickerWindow()
 		{
 			InitializeComponent();
-			slider.Value = 0;
-			slider2.Value = 0;
-			slider3.Value = 0;
+			sliderR.Value = 0;
+			sliderG.Value = 0;
+			sliderB.Value = 0;
 			SetColor();
 			rectangle.Fill = new SolidColorBrush(color);
-			label1.Content = "#FF000000";
+			labelHexVal.Content = "#FF000000";
 		}
 
 		private void SetColor()
 		{
-			color = Color.FromArgb(255, (byte) slider.Value, (byte) slider2.Value, (byte) slider3.Value);
+			color = Color.FromArgb(255, (byte) sliderR.Value, (byte) sliderG.Value, (byte) sliderB.Value);
 		}
 
 		private void slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
 		{
 			SetColor();
 			rectangle.Fill = new SolidColorBrush(color);
-			label1.Content = "#" + color.A.ToString("X2") + color.R.ToString("X2") + color.G.ToString("X2") + color.B.ToString("X2");
-			labelSlider.Content = (int) slider.Value;
-			labelSlider2.Content = (int) slider2.Value;
-			labelSlider3.Content = (int) slider3.Value;
+			labelHexVal.Content = "#" + color.A.ToString("X2") + color.R.ToString("X2") + color.G.ToString("X2") + color.B.ToString("X2");
+			labelSliderRVal.Content = (int) sliderR.Value;
+			labelSliderGVal.Content = (int) sliderG.Value;
+			labelSliderBVal.Content = (int) sliderB.Value;
 		}
 
 		private void button_Click(object sender, RoutedEventArgs e)

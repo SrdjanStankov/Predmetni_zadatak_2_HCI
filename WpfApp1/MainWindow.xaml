@@ -1,116 +1,274 @@
-﻿<Window x:Class="WpfApp1.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfApp1"
-        mc:Ignorable="d"
-        Title="MainWindow" MouseLeftButtonDown="Window_MouseLeftButtonDown"
-        Background="Transparent" Height="750" Width="1280" HorizontalAlignment="Center" VerticalAlignment="Center" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
-    <Window.CommandBindings >
-        <CommandBinding Command="{x:Static local:MainWindow.commands}" Executed="InsertDateTime_Click"/>
+﻿<Window
+    x:Class="WpfApp1.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:WpfApp1"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="MainWindow"
+    Width="1280"
+    Height="750"
+    HorizontalAlignment="Center"
+    VerticalAlignment="Center"
+    AllowsTransparency="True"
+    Background="Transparent"
+    FocusManager.FocusedElement="{Binding ElementName=rtbEditor}"
+    MouseLeftButtonDown="Window_MouseLeftButtonDown"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
+    mc:Ignorable="d">
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static local:MainWindow.commands}" Executed="InsertDateTime_Click" />
     </Window.CommandBindings>
-    <Canvas Margin="10,20,0,10" Height="720">
-        <Path Stroke="Gray" StrokeThickness="2" Name="UIPath" Height="720" Stretch="Fill" Width="1270">
+    <Canvas Height="720" Margin="10,20,0,10">
+        <Path
+            Name="UIPath"
+            Width="1270"
+            Height="720"
+            Stretch="Fill"
+            Stroke="Gray"
+            StrokeThickness="2">
             <Path.Fill>
-                <ImageBrush ImageSource="download.jpg" Stretch="UniformToFill"/>
+                <ImageBrush ImageSource="download.jpg" Stretch="UniformToFill" />
             </Path.Fill>
             <Path.Data>
                 <PathGeometry>
                     <PathFigure StartPoint="500,0">
-                        <ArcSegment Size="200,200" Point="600,75" SweepDirection="Counterclockwise"/>
-                        <ArcSegment Size="150,150" Point="550,75" SweepDirection="Clockwise"/>
-                        <ArcSegment Size="250,250" Point="650,150" SweepDirection="Counterclockwise"/>
-                        <ArcSegment Size="200,200" Point="600,150" SweepDirection="Clockwise"/>
-                        <ArcSegment Size="300,300" Point="700,225" SweepDirection="Counterclockwise"/>
-                        <ArcSegment Size="250,250" Point="650,225" SweepDirection="Clockwise"/>
-                        <ArcSegment Size="350,350" Point="750,300" SweepDirection="Counterclockwise"/>
-                        <ArcSegment Size="300,300" Point="700,300" SweepDirection="Clockwise"/>
-                        <ArcSegment Size="400,400" Point="800,375" SweepDirection="Counterclockwise"/>
-                        <ArcSegment Size="350,350" Point="750,375" SweepDirection="Clockwise"/>
-                        <ArcSegment Size="400,400" Point="850,450" SweepDirection="Counterclockwise"/>
+                        <ArcSegment
+                            Point="600,75"
+                            Size="200,200"
+                            SweepDirection="Counterclockwise" />
+                        <ArcSegment
+                            Point="550,75"
+                            Size="150,150"
+                            SweepDirection="Clockwise" />
+                        <ArcSegment
+                            Point="650,150"
+                            Size="250,250"
+                            SweepDirection="Counterclockwise" />
+                        <ArcSegment
+                            Point="600,150"
+                            Size="200,200"
+                            SweepDirection="Clockwise" />
+                        <ArcSegment
+                            Point="700,225"
+                            Size="300,300"
+                            SweepDirection="Counterclockwise" />
+                        <ArcSegment
+                            Point="650,225"
+                            Size="250,250"
+                            SweepDirection="Clockwise" />
+                        <ArcSegment
+                            Point="750,300"
+                            Size="350,350"
+                            SweepDirection="Counterclockwise" />
+                        <ArcSegment
+                            Point="700,300"
+                            Size="300,300"
+                            SweepDirection="Clockwise" />
+                        <ArcSegment
+                            Point="800,375"
+                            Size="400,400"
+                            SweepDirection="Counterclockwise" />
+                        <ArcSegment
+                            Point="750,375"
+                            Size="350,350"
+                            SweepDirection="Clockwise" />
+                        <ArcSegment
+                            Point="850,450"
+                            Size="400,400"
+                            SweepDirection="Counterclockwise" />
 
-                        <ArcSegment Size="900,900" Point="150,450" SweepDirection="Clockwise"/>
-                        <ArcSegment Size="350,350" Point="250,375" SweepDirection="Counterclockwise"/>
-                        <ArcSegment Size="400,400" Point="200,375" SweepDirection="Clockwise"/>
-                        <ArcSegment Size="350,350" Point="300,300" SweepDirection="Counterclockwise"/>
-                        <ArcSegment Size="400,400" Point="250,300" SweepDirection="Clockwise"/>
-                        <ArcSegment Size="350,350" Point="350,225" SweepDirection="Counterclockwise"/>
-                        <ArcSegment Size="400,400" Point="300,225" SweepDirection="Clockwise"/>
-                        <ArcSegment Size="350,350" Point="400,150" SweepDirection="Counterclockwise"/>
-                        <ArcSegment Size="400,400" Point="350,150" SweepDirection="Clockwise"/>
-                        <ArcSegment Size="350,350" Point="450,75" SweepDirection="Counterclockwise"/>
-                        <ArcSegment Size="400,400" Point="400,75" SweepDirection="Clockwise"/>
-                        <ArcSegment Size="350,350" Point="500,0" SweepDirection="Counterclockwise"/>
+                        <ArcSegment
+                            Point="150,450"
+                            Size="900,900"
+                            SweepDirection="Clockwise" />
+                        <ArcSegment
+                            Point="250,375"
+                            Size="350,350"
+                            SweepDirection="Counterclockwise" />
+                        <ArcSegment
+                            Point="200,375"
+                            Size="400,400"
+                            SweepDirection="Clockwise" />
+                        <ArcSegment
+                            Point="300,300"
+                            Size="350,350"
+                            SweepDirection="Counterclockwise" />
+                        <ArcSegment
+                            Point="250,300"
+                            Size="400,400"
+                            SweepDirection="Clockwise" />
+                        <ArcSegment
+                            Point="350,225"
+                            Size="350,350"
+                            SweepDirection="Counterclockwise" />
+                        <ArcSegment
+                            Point="300,225"
+                            Size="400,400"
+                            SweepDirection="Clockwise" />
+                        <ArcSegment
+                            Point="400,150"
+                            Size="350,350"
+                            SweepDirection="Counterclockwise" />
+                        <ArcSegment
+                            Point="350,150"
+                            Size="400,400"
+                            SweepDirection="Clockwise" />
+                        <ArcSegment
+                            Point="450,75"
+                            Size="350,350"
+                            SweepDirection="Counterclockwise" />
+                        <ArcSegment
+                            Point="400,75"
+                            Size="400,400"
+                            SweepDirection="Clockwise" />
+                        <ArcSegment
+                            Point="500,0"
+                            Size="350,350"
+                            SweepDirection="Counterclockwise" />
                     </PathFigure>
                 </PathGeometry>
             </Path.Data>
         </Path>
-        <DockPanel Canvas.Left="403" Canvas.Top="248" Width="464" Height="425">
+        <DockPanel
+            Canvas.Left="403"
+            Canvas.Top="248"
+            Width="464"
+            Height="425">
             <ToolBar DockPanel.Dock="Top">
-                <ToggleButton Command="EditingCommands.ToggleBold" Name="btnBold"
-                              Content="B" FontWeight="Bold" Width="20" />
-                <Separator/>
-                <ToggleButton Command="EditingCommands.ToggleItalic" Name="btnItalic" Content="I" FontStyle="Italic" Width="20"/>
-                <Separator/>
-                <ToggleButton Command="EditingCommands.ToggleUnderline" Name="btnUnderline" Width="20" >
+                <ToggleButton
+                    Name="btnBold"
+                    Width="20"
+                    Command="EditingCommands.ToggleBold"
+                    Content="B"
+                    FontWeight="Bold" />
+                <Separator />
+                <ToggleButton
+                    Name="btnItalic"
+                    Width="20"
+                    Command="EditingCommands.ToggleItalic"
+                    Content="I"
+                    FontStyle="Italic" />
+                <Separator />
+                <ToggleButton
+                    Name="btnUnderline"
+                    Width="20"
+                    Command="EditingCommands.ToggleUnderline">
                     <Underline>
                         U
                     </Underline>
                 </ToggleButton>
-                <Separator/>
-                <ComboBox Name="cmbFontSize" Width="50" ItemsSource="{Binding FontSizes}" SelectionChanged="cmbFontSize_SelectionChanged"/>
-                <Separator/>
-                <ComboBox Name="cmbFontFamily" Width="150" SelectionChanged="cmbFontFamily_SelectionChanged"/>
-                <Separator/>
-                <Button Name="btnNewDocument" Content="" Width="20" Height="20" Click="NewDocument_Click" >
+                <Separator />
+                <ComboBox
+                    Name="cmbFontSize"
+                    Width="50"
+                    ItemsSource="{Binding FontSizes}"
+                    SelectionChanged="cmbFontSize_SelectionChanged" />
+                <Separator />
+                <ComboBox
+                    Name="cmbFontFamily"
+                    Width="150"
+                    SelectionChanged="cmbFontFamily_SelectionChanged" />
+                <Separator />
+                <Button
+                    Name="btnNewDocument"
+                    Width="20"
+                    Height="20"
+                    Click="NewDocument_Click"
+                    Content="">
                     <Button.Background>
-                        <ImageBrush ImageSource="new-file-icon.png"/>
+                        <ImageBrush ImageSource="new-file-icon.png" />
                     </Button.Background>
                 </Button>
-                <Separator/>
-                <Button Name="btnOpenDocument" Content="" Width="20" Height="20" Click="OpenDocument_Click" >
+                <Separator />
+                <Button
+                    Name="btnOpenDocument"
+                    Width="20"
+                    Height="20"
+                    Click="OpenDocument_Click"
+                    Content="">
                     <Button.Background>
-                        <ImageBrush ImageSource="Custom-Icon-Design-Pretty-Office-9-Open-file.png"/>
+                        <ImageBrush ImageSource="Custom-Icon-Design-Pretty-Office-9-Open-file.png" />
                     </Button.Background>
                 </Button>
-                <Separator/>
-                <Button Name="btnSaveDocument" Content="" Width="20" Height="20" Click="SaveDocument_Click" >
+                <Separator />
+                <Button
+                    Name="btnSaveDocument"
+                    Width="20"
+                    Height="20"
+                    Click="SaveDocument_Click"
+                    Content="">
                     <Button.Background>
-                        <ImageBrush ImageSource="Save-icon.png"/>
+                        <ImageBrush ImageSource="Save-icon.png" />
                     </Button.Background>
                 </Button>
-                <Separator/>
-                <Button Name="btnColor" Width="20" Content="" Height="20" Click="Color_Click" >
+                <Separator />
+                <Button
+                    Name="btnColor"
+                    Width="20"
+                    Height="20"
+                    Click="Color_Click"
+                    Content="">
                     <Button.Background>
-                        <ImageBrush ImageSource="Color-Meter-icon.png"/>
+                        <ImageBrush ImageSource="Color-Meter-icon.png" />
                     </Button.Background>
                 </Button>
-                <Separator/>
-                <Button Name="btnFindAndReplace" Content="" Width="20" Height="20" Click="FindAndReplace_Click" >
+                <Separator />
+                <Button
+                    Name="btnFindAndReplace"
+                    Width="20"
+                    Height="20"
+                    Click="FindAndReplace_Click"
+                    Content="">
                     <Button.Background>
-                        <ImageBrush ImageSource="Actions-find-and-replace-icon.png"/>
+                        <ImageBrush ImageSource="Actions-find-and-replace-icon.png" />
                     </Button.Background>
                 </Button>
-                <Separator/>
-                <Button Name="btnInsertDateTime" Content="" Width="20" Height="20" Click="InsertDateTime_Click" >
+                <Separator />
+                <Button
+                    Name="btnInsertDateTime"
+                    Width="20"
+                    Height="20"
+                    Click="InsertDateTime_Click"
+                    Content="">
                     <Button.Background>
-                        <ImageBrush ImageSource="add-event-icon.png"/>
+                        <ImageBrush ImageSource="add-event-icon.png" />
                     </Button.Background>
                 </Button>
-                <Separator/>
+                <Separator />
             </ToolBar>
-            <RichTextBox DockPanel.Dock="Top" Height="367" Name="rtbEditor" SelectionChanged="rtbEditor_SelectionChanged" TextChanged="rtbEditor_TextChanged">
+            <RichTextBox
+                Name="rtbEditor"
+                Height="367"
+                DockPanel.Dock="Top"
+                SelectionChanged="rtbEditor_SelectionChanged"
+                TextChanged="rtbEditor_TextChanged">
                 <RichTextBox.Resources>
                     <Style TargetType="{x:Type Paragraph}">
-                        <Setter Property="Margin" Value="0"/>
+                        <Setter Property="Margin" Value="0" />
                     </Style>
                 </RichTextBox.Resources>
             </RichTextBox>
-            <StatusBar DockPanel.Dock="Bottom" Height="38">
-                <Label Name="lbWordCount" Content="Broj reci: 0" Width="454"/>
+            <StatusBar Height="38" DockPanel.Dock="Bottom">
+                <Label
+                    Name="lbWordCount"
+                    Width="454"
+                    Content="Broj reci: 0" />
             </StatusBar>
         </DockPanel>
-        <Button Name="btnClose" Click="Close_Click"  Content="Close" Canvas.Left="604" Canvas.Top="679" Height="31" Width="48" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <Button
+            Name="btnClose"
+            Canvas.Left="604"
+            Canvas.Top="679"
+            Width="48"
+            Height="31"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            Click="Close_Click"
+            Content="Close" />
     </Canvas>
 </Window>

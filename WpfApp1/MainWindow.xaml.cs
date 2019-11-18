@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -8,7 +9,6 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using Microsoft.Win32;
 
 namespace WpfApp1
 {
@@ -54,7 +54,7 @@ namespace WpfApp1
 
 		private void PopulateFontSizes()
 		{
-			for (int i = 8 ; i <= 28 ; i++)
+			for (int i = 8; i <= 28; i++)
 			{
 				if (i > 12)
 				{
@@ -80,13 +80,13 @@ namespace WpfApp1
 			object temp;
 
 			temp = rtbEditor.Selection.GetPropertyValue(Inline.FontWeightProperty);
-			btnBold.IsChecked = (temp != DependencyProperty.UnsetValue) && (temp.Equals(FontWeights.Bold));
+			btnBold.IsChecked = (temp != DependencyProperty.UnsetValue) && temp.Equals(FontWeights.Bold);
 
 			temp = rtbEditor.Selection.GetPropertyValue(Inline.FontStyleProperty);
-			btnItalic.IsChecked = (temp != DependencyProperty.UnsetValue) && (temp.Equals(FontStyles.Italic));
+			btnItalic.IsChecked = (temp != DependencyProperty.UnsetValue) && temp.Equals(FontStyles.Italic);
 
 			temp = rtbEditor.Selection.GetPropertyValue(Inline.TextDecorationsProperty);
-			btnUnderline.IsChecked = (temp != DependencyProperty.UnsetValue) && (temp.Equals(TextDecorations.Underline));
+			btnUnderline.IsChecked = (temp != DependencyProperty.UnsetValue) && temp.Equals(TextDecorations.Underline);
 
 			if (!rtbEditor.Selection.IsEmpty || !firstTime)
 			{
@@ -114,7 +114,7 @@ namespace WpfApp1
 
 		private void Color_Click(object sender, RoutedEventArgs e)
 		{
-			ColorPickerWindow window = new ColorPickerWindow
+			var window = new ColorPickerWindow
 			{
 				Left = PointToScreen(Mouse.GetPosition(this)).X,
 				Top = PointToScreen(Mouse.GetPosition(this)).Y
@@ -143,7 +143,7 @@ namespace WpfApp1
 				}
 				if (saveDialog.ShowDialog() == true)
 				{
-					FileStream fs = new FileStream(saveDialog.FileName, FileMode.OpenOrCreate);
+					var fs = new FileStream(saveDialog.FileName, FileMode.OpenOrCreate);
 					rtbEditor.Selection.Save(fs, DataFormats.Rtf);
 					fs.Dispose();
 					wasChanged = false;
@@ -157,23 +157,21 @@ namespace WpfApp1
 				{
 					return;
 				}
-				FileStream fs = new FileStream(saveDialog.FileName, FileMode.Open);
+				var fs = new FileStream(saveDialog.FileName, FileMode.Open);
 				rtbEditor.Selection.Save(fs, DataFormats.Rtf);
 				fs.Dispose();
 				wasChanged = false;
 				firstSave = false;
 				wasSaved = true;
 			}
-			Deselect();
+			SetEditorCursorToEnd();
 		}
-
-
 
 		private void OpenDocument_Click(object sender, RoutedEventArgs e)
 		{
 			if (!wasSaved && wasChanged)
 			{
-				MessageBoxResult mbres = MessageBox.Show("Sve sto nije sacuvano bice izgubljeno." + Environment.NewLine + "Da li ste sigurni da zelite da otvorite fajl?", "Nije sacuvano", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation);
+				var mbres = MessageBox.Show("Sve sto nije sacuvano bice izgubljeno." + Environment.NewLine + "Da li ste sigurni da zelite da otvorite fajl?", "Nije sacuvano", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation);
 				if (mbres != MessageBoxResult.Yes)
 				{
 					return;
@@ -183,14 +181,14 @@ namespace WpfApp1
 			{
 				SelectAll();
 				rtbEditor.Selection.Text = "";
-				FileStream fs = new FileStream(openDialog.FileName, FileMode.Open);
+				var fs = new FileStream(openDialog.FileName, FileMode.Open);
 				rtbEditor.Selection.Load(fs, DataFormats.Rtf);
 				fs.Dispose();
 				saveDialog.FileName = openDialog.FileName;
 				wasChanged = false;
 				firstSave = false;
 				wasSaved = true;
-				Deselect();
+				SetEditorCursorToEnd();
 			}
 		}
 
@@ -198,7 +196,7 @@ namespace WpfApp1
 		{
 			if (!wasSaved && wasChanged)
 			{
-				MessageBoxResult mbres = MessageBox.Show("Sve sto nije sacuvano bice izgubljeno" + Environment.NewLine + "Da li ste sigurni da zelite da otvorite novi fajl?", "Nije sacuvano", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation);
+				var mbres = MessageBox.Show("Sve sto nije sacuvano bice izgubljeno" + Environment.NewLine + "Da li ste sigurni da zelite da otvorite novi fajl?", "Nije sacuvano", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation);
 				if (mbres != MessageBoxResult.Yes)
 				{
 					return;
@@ -209,12 +207,12 @@ namespace WpfApp1
 			firstSave = true;
 			wasChanged = false;
 			wasSaved = false;
-			Deselect();
+			SetEditorCursorToEnd();
 		}
 
 		private void FindAndReplace_Click(object sender, RoutedEventArgs e)
 		{
-			FindReplaceWindow w = new FindReplaceWindow
+			var w = new FindReplaceWindow
 			{
 				Left = PointToScreen(Mouse.GetPosition(this)).X,
 				Top = PointToScreen(Mouse.GetPosition(this)).Y
@@ -223,39 +221,45 @@ namespace WpfApp1
 
 			if (w.DialogResult.Value)
 			{
-				StreamReader reader;
 				string s;
 				rtbEditor.SelectAll();
 
-				using (MemoryStream memoryStream = new MemoryStream())
+				using (var memoryStream = new MemoryStream())
 				{
 					rtbEditor.Selection.Save(memoryStream, DataFormats.Rtf);
-					reader = new StreamReader(memoryStream);
+					using var reader = new StreamReader(memoryStream);
 					reader.BaseStream.Seek(0, SeekOrigin.Begin);
 					s = reader.ReadToEnd();
 				}
 				s = System.Text.RegularExpressions.Regex.Replace(s, find, replaceWith);
-				using (MemoryStream memoryStream = new MemoryStream(Encoding.ASCII.GetBytes(s)))
+				using (var memoryStream = new MemoryStream(Encoding.ASCII.GetBytes(s)))
 				{
 					rtbEditor.Selection.Load(memoryStream, DataFormats.Rtf);
 				}
-				//MessageBox.Show(s);
 				wasChanged = true;
 				wasSaved = false;
+				SetEditorCursorToEnd();
 			}
+		}
+
+		private void SetEditorCursorToEnd()
+		{
+			rtbEditor.CaretPosition = rtbEditor.Document.ContentEnd;
+			wasChanged = false;
 		}
 
 		private void InsertDateTime_Click(object sender, RoutedEventArgs e)
 		{
-			rtbEditor.Selection.Text = DateTime.Now.ToShortDateString();
+			rtbEditor.Selection.Text = DateTime.Now.ToString();
 			wasChanged = true;
+			SetEditorCursorToEnd();
 		}
 
 		private void Close_Click(object sender, RoutedEventArgs e)
 		{
 			if (wasChanged && !wasSaved)
 			{
-				MessageBoxResult mbres = MessageBox.Show("Sve sto nije sacuvano bice izgubljeno" + Environment.NewLine + "Da li ste sigurni da zelite da izadjete?", "Nije sacuvano", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation);
+				var mbres = MessageBox.Show("Sve sto nije sacuvano bice izgubljeno" + Environment.NewLine + "Da li ste sigurni da zelite da izadjete?", "Nije sacuvano", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation);
 				if (mbres != MessageBoxResult.Yes)
 				{
 					return;
@@ -267,33 +271,19 @@ namespace WpfApp1
 		private void rtbEditor_TextChanged(object sender, TextChangedEventArgs e)
 		{
 			wasChanged = true;
+			var textRange = new TextRange(rtbEditor.Document.ContentStart, rtbEditor.Document.ContentEnd);
 
-			TextRange textRange = new TextRange(rtbEditor.Document.ContentStart, rtbEditor.Document.ContentEnd);
-
-			string[] temp = textRange.Text.Split(' ', '\n', '\t');
-			int count = -1;
-
-			foreach (string item in temp)
-			{
-				if (item != "" && item != "\r")
-				{
-					count++;
-				}
-			}
+			string[] texts = textRange.Text.Split(new char[] { ' ', '\n', '\t', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+			int count = texts.Length;
 
 			lbWordCount.Content = "Broj reci: " + count;
 		}
+
 		private void SelectAll()
 		{
 			bool tmp = wasChanged;
 			rtbEditor.SelectAll();
 			wasChanged = tmp;
-		}
-
-		private void Deselect()
-		{
-			rtbEditor.Selection.Select(rtbEditor.Selection.End, rtbEditor.Selection.End);
-			wasChanged = false;
 		}
 	}
 }
