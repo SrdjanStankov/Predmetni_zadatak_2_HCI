@@ -46,7 +46,7 @@ namespace WpfApp1
             {
                 Filter = "Files|*.rtf"
             };
-            lbWordCount.Content = "Broj reci: 0";
+            lbWordCount.Content = "Broj reči: 0";
             rtbEditor.AcceptsReturn = true;
             rtbEditor.AcceptsTab = true;
             rtbEditor.IsUndoEnabled = true;
@@ -138,7 +138,7 @@ namespace WpfApp1
             {
                 if (rtbEditor.Selection.Text == Environment.NewLine)
                 {
-                    MessageBox.Show("Nema sta da se sacuva.", "Prazno polje", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                    MessageBox.Show("Nema šta da se sačuva.", "Prazno polje", MessageBoxButton.OK, MessageBoxImage.Asterisk);
                     return;
                 }
                 if (saveDialog.ShowDialog() == true)
@@ -171,7 +171,7 @@ namespace WpfApp1
         {
             if (!wasSaved && wasChanged)
             {
-                var mbres = MessageBox.Show("Sve sto nije sacuvano bice izgubljeno." + Environment.NewLine + "Da li ste sigurni da zelite da otvorite fajl?", "Nije sacuvano", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation);
+                var mbres = MessageBox.Show($"Sve što nije sačuvano biće izgubljeno.{Environment.NewLine}Da li ste sigurni da želite da otvorite fajl?", "Nije sačuvano", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation);
                 if (mbres != MessageBoxResult.Yes)
                 {
                     return;
@@ -196,7 +196,7 @@ namespace WpfApp1
         {
             if (!wasSaved && wasChanged)
             {
-                var mbres = MessageBox.Show("Sve sto nije sacuvano bice izgubljeno" + Environment.NewLine + "Da li ste sigurni da zelite da otvorite novi fajl?", "Nije sacuvano", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation);
+                var mbres = MessageBox.Show($"Sve što nije sačuvano biće izgubljeno.{Environment.NewLine}Da li ste sigurni da želite da otvorite novi fajl?", "Nije sačuvano", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation);
                 if (mbres != MessageBoxResult.Yes)
                 {
                     return;
@@ -259,7 +259,7 @@ namespace WpfApp1
         {
             if (wasChanged && !wasSaved)
             {
-                var mbres = MessageBox.Show("Sve sto nije sacuvano bice izgubljeno" + Environment.NewLine + "Da li ste sigurni da zelite da izadjete?", "Nije sacuvano", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation);
+                var mbres = MessageBox.Show($"Sve što nije sačuvano biće izgubljeno.{Environment.NewLine}Da li ste sigurni da želite da izađete?", "Nije sačuvano", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation);
                 if (mbres != MessageBoxResult.Yes)
                 {
                     return;
@@ -276,7 +276,7 @@ namespace WpfApp1
             string[] texts = textRange.Text.Split(new char[] { ' ', '\n', '\t', '\r' }, StringSplitOptions.RemoveEmptyEntries);
             int count = texts.Length;
 
-            lbWordCount.Content = "Broj reci: " + count;
+            lbWordCount.Content = "Broj reči: " + count;
         }
 
         private void SelectAll()
